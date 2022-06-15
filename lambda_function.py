@@ -12,8 +12,9 @@ from email.mime.text import MIMEText
 import boto3
 load_dotenv()
 
+
 accessKey = os.getenv('AWS_ACCESS_KEY')
-accessSecret = os.getenv('AWS_SECRET_ACCESS_KEY')
+accessSecret = os.getenv('AWS_ACCESS_KEY_SECRET')
 
 #sends email using SES Amazon email service
 def sendEmailAWS(weatherCondition):
@@ -34,29 +35,24 @@ def sendEmailAWS(weatherCondition):
         RawMessage={"Data": msg.as_string()}
     )
 
+    msg = MIMEMultipart()
+    msg["Subject"] = "Weather today"
+    msg["From"] = "samzitestemail@gmail.com"
+    msg["To"] = "aleksagavric1@gmail.com"
+    
+    # Set message body
+    body = MIMEText(weatherCondition, "plain")
+    msg.attach(body)
+ 
+    # Convert message to string and send
+    response = ses_client.send_raw_email(
+        Source="samzitestemail@gmail.com",
+        Destinations=["aleksagavric1@gmail.com"],
+        RawMessage={"Data": msg.as_string()}
+    )
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"
 LANGUAGE = "en-US,en;q=0.5"
-
-
-
-def lambda_handler(event, context):
-    URL = "https://www.google.com/search?q=charlotte+weather&oq=charlotte+weather&aqs=chrome..69i57.2478j0j4&sourceid=chrome&ie=UTF-8"
-    data = get_weather_data(URL)
-    
-    print("\nNow:", data["dayhour"])
-    print("Description:", data['weather_now'])
-
-    #sendEmailAWS(data['weather_now'])
-    sendEmailAWS(data['weather_now'])
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "hello from Ahrain!",
-            # "location": ip.text.replace("\n", "")
-        }),
-    }
 
 def get_weather_data(url):
     session = requests.Session()
@@ -68,7 +64,54 @@ def get_weather_data(url):
     soup = bs(html.text, "html.parser")
     
     result = {}
-    result['dayhour'] = soup.find("div", attrs={"id": "wob_dts"}).text
-    result['weather_now'] = soup.find("span", attrs={"id": "wob_dc"}).text
+    will_rain = False;
     
-    return result
+    result['precipitation'] = soup.find("span", attrs={"id": "wob_pp"}).text
+    
+    days = soup.find("div", attrs={"id": "wob_dp"})
+    day = days.findAll("div", attrs={"class": "wob_df"})[0]
+    temp = day.findAll("span", {"class": "wob_t"})
+    
+    precipitation_forecast = soup.findAll("div", {"class": "wob_hw"})
+    
+    hours = 0
+    
+    result['precipitation_hourly'] = []
+    
+    for div in precipitation_forecast:
+        hours += 1
+        
+        precipitation_hour = div.find("div", {"class": "XwOqJe"})['aria-label']
+        result['precipitation_hourly'].append(precipitation_hour)
+        
+        get_number = div.find("div", {"class": "XwOqJe"}).text
+    
+        if (get_number != "" and int (get_number[:-1]) > 10):
+            will_rain = True
+        
+        if hours > 24:
+            break
+    
+    result['max-temp'] = temp[0].text
+    result['min-temp'] = temp[2].text
+    
+    return result, will_rain
+
+def lambda_handler(event='', context=''):
+    URL = "https://www.google.com/search?q=charlotte+weather&oq=charlotte+weather&aqs=chrome..69i57.2478j0j4&sourceid=chrome&ie=UTF-8"
+    data, rain_check = get_weather_data(URL)
+    
+    message = ""
+    
+    for i in range(len(data['precipitation_hourly'])):
+        message += data['precipitation_hourly'][i] + "\n"
+    
+    message += "\nOther info..\n\n"
+    message += "\n\t* Min temp: {0} Fah, {1} Cel\n".format(data['min-temp'], int((int (data['min-temp']) - 32) * 5.0/9.0))
+    message += "\t* Max temp: {0} Fah, {1} Cel".format(data['max-temp'], int((int (data['max-temp']) - 32) * 5.0/9.0))
+    
+    if (rain_check):
+        print(message)
+        sendEmailAWS(message)
+
+#lambda_handler()
