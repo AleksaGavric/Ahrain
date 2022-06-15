@@ -1,13 +1,5 @@
 # Ahrain v1 - Open Source Rain Notifier
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
 Rain sucks. Getting caught in the rain sucks even more! What doesn't suck then? **..Ahrain!**
 
 Ahrain is here to alert to you the night before if there will be rain the following day.
