@@ -33,6 +33,7 @@ if __name__ == "__main__":
 port = 465
 context = ssl.create_default_context()
 sender_email = 
+sender_password = 
 receiver_email = 
 message = """\
 Subject: Hi there
@@ -40,5 +41,5 @@ Subject: Hi there
 This message is sent from Python."""
 
 with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-    server.login("my@gmail.com", password)
+    server.login("my@gmail.com", sender_password)
     # TODO: Send email here
