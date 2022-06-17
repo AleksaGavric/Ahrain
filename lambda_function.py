@@ -15,7 +15,6 @@ import codecs
 
 load_dotenv()
 
-
 accessKey = os.getenv('AWS_ACCESS_KEY')
 accessSecret = os.getenv('AWS_ACCESS_KEY_SECRET')
 
@@ -84,6 +83,7 @@ def get_weather_data(url):
     
     return result, will_rain
 
+
 def lambda_handler(event='', context=''):
     #fetch CSV with recipient info from s3 and process data for each user
     client = boto3.client("s3")
@@ -104,6 +104,6 @@ def lambda_handler(event='', context=''):
         
         if (rain_check):
             print(message)
-            sendEmailAWS(message, row['email'])
+            #sendEmailAWS(message, row['email'])
 
 lambda_handler()
