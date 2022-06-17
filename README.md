@@ -14,7 +14,7 @@ Here's why it's awesome:
 
 Built with Python, and AWS.
 
-### Installation
+## Installation
 
 1. Clone the repo
 
@@ -22,13 +22,11 @@ Built with Python, and AWS.
    git clone https://github.com/AleksaGavric/Ahrain.git
    ```
 
-2. Install Python packages
+2. Install Python packages (check python file - not yet exported)
 
-   ```sh
-   npm install
-   ```
+3. Upload to AWS with .env set up
 
-3. ENV stuff
+4. Set up S3 bucket with .csv info
 
 ## Usage
 
