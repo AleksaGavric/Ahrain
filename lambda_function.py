@@ -107,3 +107,6 @@ def lambda_handler(event='', context=''):
             sendEmailAWS(message, row['email'])
 
 lambda_handler()
+
+# include google link for viewing
+# nice sign-off
