@@ -1,0 +1,17 @@
+{
+    "ConfigurationSetName": "ahrainconfigset",
+
+    "DeliveryOptions": {
+        "TlsPolicy": "REQUIRE",
+        "SendingPoolName": "ses-shared-pool"
+    },
+    "ReputationOptions": {
+        "ReputationMetricsEnabled": true
+    },
+    "SendingOptions": {
+        "SendingEnabled": true
+    },
+    "SuppressionOptions": {
+        "SuppressedReasons": ["BOUNCE","COMPLAINT"]
+    }
+}

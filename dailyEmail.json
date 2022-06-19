@@ -1,0 +1,8 @@
+{
+    "Template": {
+      "TemplateName": "RAINALERT",
+      "SubjectPart": "[Ahrain] RAIN ALERT!",
+      "HtmlPart": "<h1>Here is the forecast for {{city}} today:</h1><p>{{forecastMessage}}.</p><br><p>Have a dry day!</p>",
+      "TextPart": "Here is the forecast for {{city}} today: \r\n{{forecastMessage}}."
+    }
+  }

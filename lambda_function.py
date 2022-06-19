@@ -71,14 +71,13 @@ def get_weather_data(url):
         if (get_number != "" and int (get_number[:-1]) > 10):
             will_rain = True
         
-        if hours > 24:
+        if hours > 19:
             break
     
     result['max-temp'] = temp[0].text
     result['min-temp'] = temp[2].text
     
     return result, will_rain
-
 
 def lambda_handler(event='', context=''):
     client = boto3.client("s3")
@@ -98,6 +97,8 @@ def lambda_handler(event='', context=''):
         message += "\nHave a nice and dry day!"
         message += "\nAhrain"
         
+        print(message)
+
         if (rain_check):
             print(message)
             #sendEmailAWS(message, row['email'])

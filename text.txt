@@ -1,0 +1,32 @@
+Here's your forecast for the day:
+6% Friday 11:00 PM
+7% Saturday 12:00 AM
+7% Saturday 1:00 AM
+3% Saturday 2:00 AM
+2% Saturday 3:00 AM
+2% Saturday 4:00 AM
+3% Saturday 5:00 AM
+5% Saturday 6:00 AM
+4% Saturday 7:00 AM
+2% Saturday 8:00 AM
+1% Saturday 9:00 AM
+0% Saturday 10:00 AM
+0% Saturday 11:00 AM
+0% Saturday 12:00 PM
+0% Saturday 1:00 PM
+0% Saturday 2:00 PM
+0% Saturday 3:00 PM
+0% Saturday 4:00 PM
+0% Saturday 5:00 PM
+0% Saturday 6:00 PM
+0% Saturday 7:00 PM
+0% Saturday 8:00 PM
+0% Saturday 9:00 PM
+0% Saturday 10:00 PM
+0% Saturday 11:00 PM
+
+        * Min temp: 72 Fah, 22 Cel
+        * Max temp: 97 Fah, 36 Cel
+You can check the weather using the following link: https://www.google.com/search?q=charlotte+weather&oq=charlotte+weather&aqs=chrome..69i57.2478j0j4&sourceid=chrome&ie=UTF-8
+Have a nice and dry day!
+Ahrain

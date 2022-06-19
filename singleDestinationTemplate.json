@@ -1,0 +1,10 @@
+{
+    "Source":"Ahrain <samzitestemail@gmail.com>",
+    "Template": "RAINALERT",
+    "ConfigurationSetName": "ahrainconfigset",
+    "Destination": {
+      "ToAddresses": [ "samzitestemail@gmail.com", "aleksagavric1@gmail.com"
+      ]
+    },
+    "TemplateData": "{ \"city\":\"Charlotte\", \"forecastMessage\": \"10am - 10%, 11am - 29%\" }"
+  }
