@@ -307,7 +307,7 @@ def get_weather_data(url):
 
 
 def lambda_handler(event='', context=''):
-    client = boto3.client("s3")
+    client = boto3.client("s3", region_name='us-east-1', aws_access_key_id=accessKey, aws_secret_access_key=accessSecret)
     data = client.get_object(Bucket='ahrain', Key='recipientsInfo.csv')
 
     for row in csv.DictReader(codecs.getreader("utf-8")(data["Body"])):
