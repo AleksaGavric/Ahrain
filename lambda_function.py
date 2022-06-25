@@ -281,19 +281,21 @@ def get_weather_data(url):
         precipitation_hour = div.find("div", {"class": "XwOqJe"})['aria-label']
         get_number = div.find("div", {"class": "XwOqJe"}).text
         
-        if (get_number[:-1] != "" and int (get_number[:-1]) > 10):
+        if (get_number[:-1] != "" and int (get_number[:-1]) > 20):
             info = precipitation_hour.split(" ")
             result['precipitation_hourly'].append("Drizzle at {time}{am}: {chance} chance".format(time = info[2], am = info[3], chance = info[0]))    
             will_rain = True
             continue
            
-        if (get_number[:-1] != "" and int (get_number[:-1]) > 12):
-            result['precipitation_hourly'].append(precipitation_hour)    
+        if (get_number[:-1] != "" and int (get_number[:-1]) > 30):
+            info = precipitation_hour.split(" ")
+            result['precipitation_hourly'].append("Rain at {time}{am}: {chance} chance".format(time = info[2], am = info[3], chance = info[0]))   
             will_rain = True
             continue
         
-        if (get_number[:-1] != "" and int (get_number[:-1]) > 15):
-            result['precipitation_hourly'].append("precipitation_hour")    
+        if (get_number[:-1] != "" and int (get_number[:-1]) > 60):
+            info = precipitation_hour.split(" ")
+            result['precipitation_hourly'].append("Storm at {time}{am}: {chance} chance".format(time = info[2], am = info[3], chance = info[0]))               
             will_rain = True 
             continue
          
