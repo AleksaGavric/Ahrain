@@ -1,3 +1,5 @@
 .env
 pipfile
 createCSV.py
+.code-workspace
+AhrainWorkspace
