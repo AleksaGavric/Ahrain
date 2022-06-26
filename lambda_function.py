@@ -150,9 +150,9 @@ def sendEmailAWS(weatherCondition, emailRecipient, weatherURL):
                         <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">
                             <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Good Morning,</p>
                             <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Chances are it will rain in the following hours:</p>
-                            
+                            <ul>
                             """ + weatherCondition + """
-                            <br>
+                            </ul> <br>
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; box-sizing: border-box; width: 100%;" width="100%">
                             <tbody>
                                 <tr>
@@ -283,25 +283,27 @@ def get_weather_data(url):
         
         if (get_number[:-1] != "" and int (get_number[:-1]) in range(20, 31)):
             info = precipitation_hour.split(" ")
-            result['precipitation_hourly'].append("""<li style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color:#20eee7">DRIZZLE: {time}{am} - {chance}%</li>""".format(time = info[2], am = info[3], chance = info[0]))   
+            result['precipitation_hourly'].append("""<li style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color:#20eee7">DRIZZLE: {time}{am} - {chance}</li>""".format(time = info[2], am = info[3], chance = info[0]))   
             will_rain = True
             continue
            
         if (get_number[:-1] != "" and int (get_number[:-1]) in range(31, 45)):
             info = precipitation_hour.split(" ")
-            result['precipitation_hourly'].append("""<li style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color:#1781e5">RAIN: {time}{am} - {chance}%</li>""".format(time = info[2], am = info[3], chance = info[0]))   
+            result['precipitation_hourly'].append("""<li style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color:#1781e5">RAIN: {time}{am} - {chance}</li>""".format(time = info[2], am = info[3], chance = info[0]))   
             will_rain = True
             continue
         
         if (get_number[:-1] != "" and int (get_number[:-1]) in range(45, 100)):
             info = precipitation_hour.split(" ")
-            result['precipitation_hourly'].append("""<li style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color:#0b13f4">STORM: {time}{am} - {chance}%</li>""".format(time = info[2], am = info[3], chance = info[0]))   
+            result['precipitation_hourly'].append("""<li style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color:#0b13f4">STORM: {time}{am} - {chance}</li>""".format(time = info[2], am = info[3], chance = info[0]))   
             will_rain = True 
             continue
          
         if hours > 24:
             break
-    
+
+    result['precipitation_hourly'].append("<br>")   
+
     result['max-temp'] = temp[0].text
     result['min-temp'] = temp[2].text
     
@@ -322,8 +324,8 @@ def lambda_handler(event='', context=''):
         for i in range(len(data['precipitation_hourly'])):
             message += data['precipitation_hourly'][i]
 
-        message += "\n * Min temp: {0} Fah, {1} Cel\n".format(data['min-temp'], int((int (data['min-temp']) - 32) * 5.0/9.0))
-        message += " * Max temp: {0} Fah, {1} Cel \n\n".format(data['max-temp'], int((int (data['max-temp']) - 32) * 5.0/9.0))
+        message += "* Min temp: {0} Fah, {1} Cel<br>".format(data['min-temp'], int((int (data['min-temp']) - 32) * 5.0/9.0))
+        message += "* Max temp: {0} Fah, {1} Cel".format(data['max-temp'], int((int (data['max-temp']) - 32) * 5.0/9.0))
 
         if (rain_check):
             print(message)
