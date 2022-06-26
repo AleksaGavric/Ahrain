@@ -281,21 +281,21 @@ def get_weather_data(url):
         precipitation_hour = div.find("div", {"class": "XwOqJe"})['aria-label']
         get_number = div.find("div", {"class": "XwOqJe"}).text
         
-        if (get_number[:-1] != "" and int (get_number[:-1]) > 20):
+        if (get_number[:-1] != "" and int (get_number[:-1]) in range(20, 31)):
             info = precipitation_hour.split(" ")
-            result['precipitation_hourly'].append("Drizzle at {time}{am}: {chance} chance".format(time = info[2], am = info[3], chance = info[0]))    
+            result['precipitation_hourly'].append("""<li style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color:#20eee7">DRIZZLE: {time}{am} - {chance}%</li>""".format(time = info[2], am = info[3], chance = info[0]))   
             will_rain = True
             continue
            
-        if (get_number[:-1] != "" and int (get_number[:-1]) > 30):
+        if (get_number[:-1] != "" and int (get_number[:-1]) in range(31, 45)):
             info = precipitation_hour.split(" ")
-            result['precipitation_hourly'].append("Rain at {time}{am}: {chance} chance".format(time = info[2], am = info[3], chance = info[0]))   
+            result['precipitation_hourly'].append("""<li style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color:#1781e5">RAIN: {time}{am} - {chance}%</li>""".format(time = info[2], am = info[3], chance = info[0]))   
             will_rain = True
             continue
         
-        if (get_number[:-1] != "" and int (get_number[:-1]) > 60):
+        if (get_number[:-1] != "" and int (get_number[:-1]) in range(45, 100)):
             info = precipitation_hour.split(" ")
-            result['precipitation_hourly'].append("Storm at {time}{am}: {chance} chance".format(time = info[2], am = info[3], chance = info[0]))               
+            result['precipitation_hourly'].append("""<li style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; color:#0b13f4">STORM: {time}{am} - {chance}%</li>""".format(time = info[2], am = info[3], chance = info[0]))   
             will_rain = True 
             continue
          
@@ -320,10 +320,10 @@ def lambda_handler(event='', context=''):
         message = "\n"
 
         for i in range(len(data['precipitation_hourly'])):
-            message += data['precipitation_hourly'][i] + "\n"
+            message += data['precipitation_hourly'][i]
 
-        message += "\n* Min temp: {0} Fah, {1} Cel\n".format(data['min-temp'], int((int (data['min-temp']) - 32) * 5.0/9.0))
-        message += "* Max temp: {0} Fah, {1} Cel \n\n".format(data['max-temp'], int((int (data['max-temp']) - 32) * 5.0/9.0))
+        message += "\n * Min temp: {0} Fah, {1} Cel\n".format(data['min-temp'], int((int (data['min-temp']) - 32) * 5.0/9.0))
+        message += " * Max temp: {0} Fah, {1} Cel \n\n".format(data['max-temp'], int((int (data['max-temp']) - 32) * 5.0/9.0))
 
         if (rain_check):
             print(message)
