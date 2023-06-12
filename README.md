@@ -1,4 +1,8 @@
+# DISCOUNTINUED - thank you to all who used it <3
+
 # [Ahrain v1 - Open Source Rain Notifier](https://ahra.in)
+
+
 
 Rain sucks. Getting caught in the rain sucks even more! Well what can you do about it? **..Ahrain!**
 
